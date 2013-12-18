@@ -8,6 +8,17 @@ namespace Frikz.Web.Core
 {
     public class Person
     {
+        Int32 PersonID;
+        string FirstName;
+        string MiddleName;
+        string LastName;
+        string DayNumber;
+        string MobileNumber;
+        string EmailAddress;
+        string PostalAddress;
+        string PostCode;
+        bool Active;
+                
         public DataSet dsPersonCollection;
 
         public Person()
@@ -23,7 +34,6 @@ namespace Frikz.Web.Core
             dtPerson.Columns.Add("PersonId", typeof(Int32));
             //dtPerson.Columns.Add("UserId", typeof(Guid));
             //dtPerson.Columns.Add("RoleId", typeof(Guid));
-            dtPerson.Columns.Add("PostalAddress", typeof(String));
             dtPerson.Columns.Add("FirstName", typeof(String));
             dtPerson.Columns.Add("MiddleName", typeof(String));
             dtPerson.Columns.Add("LastName", typeof(String));

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Frikz.Web.Core.Constants
+﻿
+namespace Frikz.Web.Core
 {
-    public static class Payment
+    public static class Constants
     {
-        public enum Status { NONE, COMPLETED, FAILED, PENDING };
+        // Constant Variables        
     }
 }

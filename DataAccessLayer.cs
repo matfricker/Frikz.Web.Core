@@ -24,6 +24,13 @@ namespace Frikz.Web.Core
             get { return ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString; }
         }
 
+        public static string DataSource {
+            get
+            {
+                return new SqlConnectionStringBuilder(ConnectionString).DataSource.ToString();
+            }
+        }
+
         public static DataTable ExecuteDataTable(string storedProcedureName,  params SqlParameter[] paramArray)
         {
             DataTable dt = new DataTable();

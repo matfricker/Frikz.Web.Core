@@ -54,7 +54,7 @@
     <Compile Include="DataAccessLayer.cs" />
     <Compile Include="DataTableHelper.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="PageForm.cs" />
+    <Compile Include="GridFormPage.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegistrationSession.cs" />

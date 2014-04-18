@@ -69,18 +69,62 @@ namespace Frikz.Web.Core
 
         public static bool ExecuteProcedure(string procedureName, List<Tuple<string, object>> paramList)
         {
-            using (SqlCommand cmd = DataAccessLayer.GetCommand(procedureName))
+            try
             {
-                for (int i = 0; i < paramList.Count; i++)
-                {
-                    DataAccessLayer.PopulateParameter(cmd, paramList[i].Item1, paramList[i].Item2);
-                }
-                cmd.ExecuteNonQuery();
+                ExecuteProcedureReturnArray(procedureName, paramList);
+            }
+            catch
+            { 
+                return false;
             }
             return true;
         }
 
-        public static void PopulateParameter(SqlCommand command, string name, object val)
+        public static Array ExecuteProcedureReturnArray(string procedureName, List<Tuple<string, object>> paramList)
+        {
+            return ExecuteProcedureReturnArray(procedureName, paramList, null); 
+        }
+
+        public static Array ExecuteProcedureReturnArray(string procedureName, List<Tuple<string, object>> paramList, string[,] paramOut)
+        {
+            string[,] resultArray;
+
+            using (SqlCommand cmd = DataAccessLayer.GetCommand(procedureName))
+            {
+                // InputParameter
+                for (int i = 0; i < paramList.Count; i++)
+                {
+                    DataAccessLayer.PopulateParameter(cmd, paramList[i].Item1, paramList[i].Item2, false);
+                }
+
+                if (paramOut != null)
+                { 
+                    // OutPutParamater
+                    for (int i = 0; i < paramOut.Length / 2; i++)
+                    {
+                        DataAccessLayer.PopulateParameter(cmd, paramOut[i, 0], paramOut[i, 1], true);
+                    }
+                }
+                
+                cmd.ExecuteNonQuery();
+
+                if (paramOut != null)
+                {
+                    resultArray = new string[paramOut.Length / 2, 2];
+
+                    for (int i = 0; i < paramOut.Length / 2; i++)
+                    {
+                        string _result = cmd.Parameters["@" + paramOut[i, 0]].Value.ToString();
+                        resultArray[i, 0] = paramOut[i, 0];
+                        resultArray[i, 1] = _result;
+                    }
+                }
+                else { resultArray = null; }
+            }
+            return resultArray;
+        }
+
+        public static void PopulateParameter(SqlCommand command, string name, object val, bool output)
         {
             if (command != null && name != null)
             {
@@ -103,6 +147,9 @@ namespace Frikz.Web.Core
                 {
                     SqlParameter param = command.Parameters[pname];
 
+                    if (output)
+                        param.Direction = ParameterDirection.Output;
+
                     if (val != DBNull.Value && val != null)
                     {
                         switch (param.SqlDbType)
@@ -115,7 +162,7 @@ namespace Frikz.Web.Core
                             case SqlDbType.Decimal:
                                 param.Value = Utilities.ConvertEx<Decimal?>(val, null);
                                 break;
-
+                            
                             default:
                                 param.Value = val;
                                 break;
@@ -138,7 +185,31 @@ namespace Frikz.Web.Core
             command.CommandType = type;
             command.CommandText = sql;
             return command;
-        }        
+        }
+
+        public static object DBNullHandler(object instance)
+        {
+            if (instance != null)
+            {
+                return instance;
+            }
+            else
+            {
+                return DBNull.Value;
+            }
+        }
+
+        public static object DBIntHandler(object instance)
+        {
+            if (instance != null)
+            {
+                return instance;
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
     }
 }

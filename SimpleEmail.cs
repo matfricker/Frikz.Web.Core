@@ -12,7 +12,6 @@ namespace Frikz.Web.Core
         public static bool GenerateEmail(string fromAddress, string toAddress, string bcc, string subject, string bodyText)
         {
             string smtpServer = ConfigurationManager.AppSettings["SMTPServer"].ToString();
-            string devAddress = ConfigurationManager.AppSettings["DevAddress"].ToString();
             string exceptionError = null;
 
             MailMessage mailObj = new MailMessage(fromAddress, toAddress, subject, bodyText);
@@ -22,8 +21,6 @@ namespace Frikz.Web.Core
             {
                 MailAddress BccAddress = new MailAddress(bcc);
                 mailObj.Bcc.Add(BccAddress);
-                // Add development email address
-                mailObj.Bcc.Add(devAddress);
             }
 
             SmtpClient SMTPServer = new SmtpClient(smtpServer);

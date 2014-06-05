@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
+using System.Web.UI;
 
 namespace Frikz.Web.Core
 {
@@ -50,6 +49,41 @@ namespace Frikz.Web.Core
                 else
                     return defaultValue;
             }
+        }
+
+        public static string GetLimitedWords(string str, int NumberOfWords)
+        {
+            string[] Words = str.Split(' ');
+            string _return = string.Empty;
+
+            if (Words.Length <= NumberOfWords)
+            {
+                _return = str;
+            }
+            else
+            {
+                for (int i = 0; i < NumberOfWords; i++)
+                {
+                    _return += Words.GetValue(i).ToString();
+                    if (i != NumberOfWords - 1)
+                    {
+                        _return += " ";
+                    }
+                }
+            }
+            return _return.ToString();
+        }
+
+        public static string GenerateTextAreaText(string str)
+        {
+            StringWriter stringWriter = new StringWriter();
+            using (HtmlTextWriter writer = new HtmlTextWriter(stringWriter))
+            {
+                writer.RenderBeginTag(HtmlTextWriterTag.P);
+                writer.Write(str.Replace("\n\n", "</p><p>"));
+                writer.RenderEndTag();
+            }
+            return stringWriter.ToString();
         }
     }
 }

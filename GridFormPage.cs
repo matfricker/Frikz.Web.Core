@@ -75,7 +75,7 @@ namespace Frikz.Web.Core
                  
                 if (CommandArgument == "CREATE")
                      createButtonPanel.Visible = false;
-                else if (CommandArgument == "UPDATE" | CommandArgument == "REMOVE")
+                else if (CommandArgument == "UPDATE" | CommandArgument == "REMOVE" | CommandArgument == "ARCHIVE")
                     updateButtonPanel.Visible = false;
             }
         }

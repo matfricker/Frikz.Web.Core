@@ -8,6 +8,6 @@ namespace Frikz.Web.Core.Constants
 
     public static class Payment
     {
-        public enum Status { NONE, COMPLETED, FAILED, PENDING };
+        public enum Status { NONE, COMPLETED, FAILED, INCOMPLETE };
     }
 }

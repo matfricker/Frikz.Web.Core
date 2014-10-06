@@ -31,6 +31,14 @@ namespace Frikz.Web.Core
             }
         }
 
+        public static string InitialCatalog
+        {
+            get
+            {
+                return new SqlConnectionStringBuilder(ConnectionString).InitialCatalog.ToString();
+            }
+        }
+
         public static DataTable ExecuteDataTable(string storedProcedureName,  params SqlParameter[] paramArray)
         {
             DataTable dt = new DataTable();

@@ -11,17 +11,18 @@ namespace Frikz.Web.Core
     {
         public static bool GenerateEmail(string fromAddress, string toAddress, string bcc, string subject, string bodyText)
         {
+            string smtpServer = ConfigurationManager.AppSettings["SMTPServer"].ToString();
+            int smtpPort = Convert.ToInt32(ConfigurationManager.AppSettings["SMTPPort"]);
+            string account = ConfigurationManager.AppSettings["AdminAddress"].ToString();
+            string pass = ConfigurationManager.AppSettings["AdminPass"].ToString();
             string exceptionError = null;
 
-            SmtpClient client = 
-                new SmtpClient(ConfigurationManager.AppSettings["SMTPServer"].ToString(), 
-                               Convert.ToInt32(ConfigurationManager.AppSettings["SMTPPort"]));
-            client.UseDefaultCredentials = false;
-            client.Credentials = 
-                new System.Net.NetworkCredential(ConfigurationManager.AppSettings["AdminAddress"].ToString(),
-                                                 ConfigurationManager.AppSettings["AdminPass"].ToString());
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            SmtpClient client = new SmtpClient(smtpServer, smtpPort);
+            client.UseDefaultCredentials = true;
+            client.Credentials = new System.Net.NetworkCredential(account, pass);
             client.EnableSsl = true;
+            
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
 
             MailMessage mailObj = new MailMessage(fromAddress, toAddress, subject, bodyText);
             mailObj.IsBodyHtml = true;
@@ -32,7 +33,6 @@ namespace Frikz.Web.Core
                 mailObj.Bcc.Add(BccAddress);
             }
 
-            //SmtpClient SMTPServer = new SmtpClient(smtpServer);
             try
             {
                 client.Send(mailObj);

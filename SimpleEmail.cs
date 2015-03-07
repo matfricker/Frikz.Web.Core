@@ -9,7 +9,7 @@ namespace Frikz.Web.Core
 {
     public class SimpleEmail
     {
-        public static bool GenerateEmail(string fromAddress, string toAddress, string bcc, string subject, string bodyText)
+        public static bool GenerateEmail(string fromAddress, string toAddress, string bcc, string subject, string bodyText, bool isSsl)
         {
             string smtpServer = ConfigurationManager.AppSettings["SMTPServer"].ToString();
             int smtpPort = Convert.ToInt32(ConfigurationManager.AppSettings["SMTPPort"]);
@@ -20,7 +20,7 @@ namespace Frikz.Web.Core
             SmtpClient client = new SmtpClient(smtpServer, smtpPort);
             client.UseDefaultCredentials = true;
             client.Credentials = new System.Net.NetworkCredential(account, pass);
-            client.EnableSsl = true;
+            client.EnableSsl = isSsl;
             
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
 

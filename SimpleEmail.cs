@@ -19,8 +19,9 @@ namespace Frikz.Web.Core
 
             SmtpClient client = new SmtpClient(smtpServer, smtpPort);
             client.UseDefaultCredentials = true;
-            client.Credentials = new System.Net.NetworkCredential(account, pass);
             client.EnableSsl = isSsl;
+            client.Credentials = new System.Net.NetworkCredential(account, pass);
+            
             
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
 

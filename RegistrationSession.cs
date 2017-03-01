@@ -1,9 +1,4 @@
-﻿using System;
-using System.Web;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data;
+﻿using System.Data;
 
 namespace Frikz.Web.Core
 {
@@ -36,12 +31,10 @@ namespace Frikz.Web.Core
         {
             System.Web.HttpContext.Current.Session.Add(sessionName, ds);
         }
-        
+
         public static void ClearRegistrationSession()
         {
             System.Web.HttpContext.Current.Session.Clear();
         }
-
-        
     }
 }

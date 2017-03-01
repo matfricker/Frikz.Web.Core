@@ -39,15 +39,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\TheHospitalityCompany\TheHospitalityCompany\packages\Newtonsoft.Json.5.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="PayPalCoreSDK">
-      <HintPath>..\..\TheHospitalityCompany\TheHospitalityCompany\packages\PayPalCoreSDK.1.4.2\lib\net40\PayPalCoreSDK.dll</HintPath>
-    </Reference>
-    <Reference Include="PayPalMerchantSDK">
-      <HintPath>..\..\TheHospitalityCompany\TheHospitalityCompany\packages\PayPalMerchantSDK.2.7.109\lib\PayPalMerchantSDK.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -63,9 +54,6 @@
     <Compile Include="DataAccessLayer.cs" />
     <Compile Include="DataTableHelper.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="GridFormPage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegistrationSession.cs" />
     <Compile Include="SimpleEmail.cs" />

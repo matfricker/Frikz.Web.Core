@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("IPC User")]
 [assembly: AssemblyProduct("Frikz.Web.Core")]
-[assembly: AssemblyCopyright("Copyright © IPC User 2011")]
+[assembly: AssemblyCopyright("Copyright © Frikz Co 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

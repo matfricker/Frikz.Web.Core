@@ -9,17 +9,17 @@ namespace Frikz.Web.Core
     public static class DataAccessLayer
     {
         static DataAccessLayer() {}
-        
+
         private static SqlConnection connection;
 
         private static void OpenConnection()
         {
-            connection = (connection == null) ? new SqlConnection(ConnectionString) : connection;
+            connection = connection ?? new SqlConnection(ConnectionString);
             if (connection.State == ConnectionState.Closed)
                 connection.Open();
         }
 
-        private static String ConnectionString
+        private static string ConnectionString
         {
             get { return ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString; }
         }
@@ -43,8 +43,10 @@ namespace Frikz.Web.Core
         {
             DataTable dt = new DataTable();
             SqlConnection cn = new SqlConnection(ConnectionString);
-            SqlCommand cmd = new SqlCommand(storedProcedureName, cn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand(storedProcedureName, cn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
 
             if (cn.State == ConnectionState.Closed || cn.State == ConnectionState.Broken)
                 cn.Open();
@@ -97,12 +99,12 @@ namespace Frikz.Web.Core
         {
             string[,] resultArray;
 
-            using (SqlCommand cmd = DataAccessLayer.GetCommand(procedureName))
+            using (SqlCommand cmd = GetCommand(procedureName))
             {
                 // InputParameter
                 for (int i = 0; i < paramList.Count; i++)
                 {
-                    DataAccessLayer.PopulateParameter(cmd, paramList[i].Item1, paramList[i].Item2, false);
+                    PopulateParameter(cmd, paramList[i].Item1, paramList[i].Item2, false);
                 }
 
                 if (paramOut != null)
@@ -110,7 +112,7 @@ namespace Frikz.Web.Core
                     // OutPutParamater
                     for (int i = 0; i < paramOut.Length / 2; i++)
                     {
-                        DataAccessLayer.PopulateParameter(cmd, paramOut[i, 0], paramOut[i, 1], true);
+                        PopulateParameter(cmd, paramOut[i, 0], paramOut[i, 1], true);
                     }
                 }
                 
